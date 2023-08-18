@@ -201,6 +201,7 @@ export default function Dashboard(props: DashboardProps) {
                     textDecoration: "none",
                   },
                 }}
+                key={index}
               >
                 <ListItem
                   sx={{
