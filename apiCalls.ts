@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import Cookies from 'js-cookie'
 
-const BACKENDURL = process.env.NEXT_BACKEND_URL || 'http://localhost:3333'
+const BACKENDURL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 const signinURL = `${BACKENDURL}/auth/login`
 const registerURL = `${BACKENDURL}/auth/login`
