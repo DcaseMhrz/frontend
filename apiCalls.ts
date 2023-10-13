@@ -6,6 +6,7 @@ const BACKENDURL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 const signinURL = `${BACKENDURL}/auth/login`
 const registerURL = `${BACKENDURL}/auth/login`
+const hfcURL = `${BACKENDURL}/hfc`
 
 
 const config = () => {
@@ -48,4 +49,14 @@ const handleSignInWithGoogle = async () => {
     console.error("Error occurred while fetching response URL:", error);
   }
 };
-module.exports = { login, register, handleSignInWithGoogle }
+const sendHfcData = async (data: any) => {
+  try {
+    const response = await axios.post(hfcURL, data)
+    return response.data
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { login, register, handleSignInWithGoogle, sendHfcData }
