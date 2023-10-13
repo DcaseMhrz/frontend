@@ -78,7 +78,7 @@ const getStepContent = (
           <Typography variant="caption">
             Please fill in the Details of the person collecting
           </Typography>
-          <InputLabel sx={{ mt: 2, mb: 2 }}>Collector's Name</InputLabel>
+          <InputLabel sx={{ mt: 2, mb: 2 }}>Collector&apos;s Name</InputLabel>
           <TextField
             required
             fullWidth
@@ -86,14 +86,14 @@ const getStepContent = (
             onChange={handleChange("cname")}
             value={hfc.cname || ""} // added value prop here
           />
-          <InputLabel>Collector's Phone Number (Optional)</InputLabel>
+          <InputLabel>Collector&apos;s Phone Number (Optional)</InputLabel>
           <TextField
             fullWidth
             sx={{ mt: 2, mb: 2 }}
             onChange={handleChange("cphone")}
             value={hfc.cphone || ""} // added value prop here
           />
-          <InputLabel>Collector's Email (Optional)</InputLabel>
+          <InputLabel>Collector&apos;s Email (Optional)</InputLabel>
           <TextField
             fullWidth
             sx={{ mt: 2, mb: 2 }}
@@ -177,9 +177,7 @@ export default function HorizontalNonLinearStepper() {
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        ? steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
