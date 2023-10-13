@@ -309,7 +309,7 @@ export default function HorizontalNonLinearStepper() {
                     onClick={() => {
                       handleComplete(hfc);
                     }}
-                    disabled={!termsAccepted}
+                    disabled={!termsAccepted && activeStep === 2}
                     sx={{ width: "40%" }}
                   >
                     {completedSteps() === totalSteps() - 1 ? "Finish" : "Next"}
