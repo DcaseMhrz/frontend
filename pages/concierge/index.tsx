@@ -6,7 +6,7 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Checkbox, FormControlLabel, FormLabel, Paper } from "@mui/material";
+import { Checkbox, CircularProgress, FormControlLabel, FormLabel, Paper } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const api = require("../../apiCalls");
@@ -145,6 +145,8 @@ const getStepContent = (
   }
 };
 
+const [isLoading,setIsLoading]=React.useState(false)
+
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{ [k: number]: boolean }>(
@@ -196,11 +198,23 @@ export default function HorizontalNonLinearStepper() {
     setCompleted(newCompleted);
     handleNext();
 
+  
+
     if (completedSteps() === totalSteps()) {
-      // Make the API call when the "Finish" button is clicked
-      const res = await api.sendHfcData(hfc);
+      setIsLoading(true)
+      try {
+        const res = await api.sendHfcData(hfc);
       console.log(res.id);
       setHfcId(res.id);
+      } catch (error) {
+        console.log(error)
+        
+      }
+      finally{
+        setIsLoading(false)
+      }
+      // Make the API call when the "Finish" button is clicked
+      
     }
   };
 
@@ -230,10 +244,14 @@ export default function HorizontalNonLinearStepper() {
           </Step>
         ))}
       </Stepper>
+      
       <div>
         {allStepsCompleted() ? (
           <>
-            <Box
+          {isLoading?<Box  display="flex"
+  justifyContent="center"
+  alignItems="center"
+  minHeight="100vh" ><CircularProgress/></Box>:<><Box
               sx={{
                 flexGrow: 1,
                 overflow: "auto",
@@ -250,7 +268,8 @@ export default function HorizontalNonLinearStepper() {
             </Typography>
             <Typography sx={{ mt: 2, mb: 1 }} variant="h2" textAlign={"center"}>
               HFC#{hfcId}
-            </Typography>
+            </Typography></>}
+            
           </>
         ) : (
           <Box sx={{ flexGrow: 1, overflow: "auto", marginTop: "1vh" }}>
