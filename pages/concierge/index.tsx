@@ -145,9 +145,10 @@ const getStepContent = (
   }
 };
 
-const [isLoading,setIsLoading]=React.useState(false)
+
 
 export default function HorizontalNonLinearStepper() {
+  const [isLoading,setIsLoading]=React.useState(false)
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{ [k: number]: boolean }>(
     {}
