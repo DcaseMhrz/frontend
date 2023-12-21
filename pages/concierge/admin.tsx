@@ -298,10 +298,10 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
               columns={columns}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { page: 0, pageSize: 10 },
                 },
               }}
-              pageSizeOptions={[5, 10]}
+              pageSizeOptions={[10, 50, 100]}
               onRowDoubleClick={(row) => {
                 setOpen(true);
                 setselectedHFC(row.row);
