@@ -7,6 +7,7 @@ const BACKENDURL = process.env.NEXT_PUBLIC_BACKEND_URL
 const signinURL = `${BACKENDURL}/auth/login`
 const registerURL = `${BACKENDURL}/auth/login`
 const hfcURL = `${BACKENDURL}/hfc`
+const searchUrl = `${BACKENDURL}/search?q=`
 
 
 const config = () => {
@@ -59,4 +60,33 @@ const sendHfcData = async (data: any) => {
   }
 }
 
-module.exports = { login, register, handleSignInWithGoogle, sendHfcData }
+const getHfcData = async () => {
+  try {
+    const response = await axios.get(hfcURL, config())
+    return response.data
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+const updateHfcData = async (data: any) => {
+  try {
+    const response = await axios.put(`${hfcURL}/${data.id}`, data)
+    return response.data
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+const searchHFCData = async (searchTerm: any) => {
+  try {
+    const response = await axios.get(`${searchUrl}${searchTerm}`, config())
+    return response.data
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { login, register, handleSignInWithGoogle, sendHfcData, getHfcData, updateHfcData, searchHFCData }

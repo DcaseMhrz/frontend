@@ -23,6 +23,10 @@ import InboxIcon from "@mui/icons-material/InboxOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import { WorkHistory } from "@mui/icons-material";
 import Logout from "../Logout";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import Head from "next/head";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
+import { Tooltip } from "@mui/material";
 
 function Copyright(props: any) {
   return (
@@ -34,7 +38,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mdikesh.vercel.app/">
-        Dcase Mhrz
+        Concierge -Sofitel Sydney Wentworth
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -44,24 +48,19 @@ function Copyright(props: any) {
 
 const itemLists = [
   {
-    name: "Home",
-    link: "/",
-    icon: <HomeIcon sx={{ height: 40, width: 40 }} />,
-  },
-  {
-    name: "Sofitel Hotel",
-    link: "/sofitel",
-    icon: <WorkHistory sx={{ height: 40, width: 40 }} />,
-  },
-  {
-    name: "profile match",
+    name: "Dashboard",
     link: "/dashboard",
     icon: <HomeIcon sx={{ height: 40, width: 40 }} />,
   },
   {
-    name: "settings",
-    link: "/dashboard",
-    icon: <HomeIcon sx={{ height: 40, width: 40 }} />,
+    name: "HFC Form",
+    link: "/concierge",
+    icon: <InsertDriveFileIcon sx={{ height: 40, width: 40 }} />,
+  },
+  {
+    name: "Search HFC",
+    link: "/concierge/admin",
+    icon: <PlagiarismIcon sx={{ height: 40, width: 40 }} />,
   },
 ];
 
@@ -131,6 +130,9 @@ export default function Dashboard(props: DashboardProps) {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
+        <Head>
+          <title>{props.title}</title>
+        </Head>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
@@ -183,7 +185,7 @@ export default function Dashboard(props: DashboardProps) {
               alignItems="center" // for vertical centering
               // take the full viewport height
             >
-              <Typography variant="h5">Welcome Dikesh</Typography>
+              <Typography variant="h5">Concierge SSW</Typography>
             </Box>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
@@ -192,43 +194,50 @@ export default function Dashboard(props: DashboardProps) {
           <Divider />
           <List>
             {itemLists.map((item, index) => (
-              <Link
-                href={item.link}
-                sx={{
-                  color: "inherit", // or any color you prefer
-                  textDecoration: "none",
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
+              <Tooltip
+                disableHoverListener={open}
+                title={item.name}
+                placement="right"
                 key={index}
               >
-                <ListItem
+                <Link
+                  href={item.link}
                   sx={{
+                    color: "inherit", // or any color you prefer
+                    textDecoration: "none",
                     "&:hover": {
-                      cursor: "pointer",
-                      "& .MuiListItemIcon-root": {
-                        color: "#2E94F4", // replace with your desired color
-                      },
-                      "& .MuiListItemText-root": {
-                        color: "#2E94F4", // replace with your desired color
-                        "& a": {
-                          // targeting the anchor tag within ListItemText
-                          textDecoration: "none",
-                        },
-                      },
+                      textDecoration: "none",
                     },
                   }}
-                  // onClick={() => handleItemClick(item.name)}
+                  key={index}
                 >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText
-                    primary={item.name}
-                    sx={{ textDecoration: "none" }}
-                  />
-                </ListItem>
-                <Divider />
-              </Link>
+                  <ListItem
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer",
+                        "& .MuiListItemIcon-root": {
+                          color: "#2E94F4", // replace with your desired color
+                        },
+                        "& .MuiListItemText-root": {
+                          color: "#2E94F4", // replace with your desired color
+                          "& a": {
+                            // targeting the anchor tag within ListItemText
+                            textDecoration: "none",
+                          },
+                        },
+                      },
+                    }}
+                    // onClick={() => handleItemClick(item.name)}
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText
+                      primary={item.name}
+                      sx={{ textDecoration: "none" }}
+                    />
+                  </ListItem>
+                  <Divider />
+                </Link>
+              </Tooltip>
             ))}
           </List>
         </Drawer>
@@ -247,8 +256,8 @@ export default function Dashboard(props: DashboardProps) {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {props.children}
-            <Copyright sx={{ pt: 4 }} />
           </Container>
+          <Copyright sx={{ pt: 4, mb: "0" }} />
         </Box>
       </Box>
     </ThemeProvider>

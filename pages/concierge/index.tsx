@@ -6,11 +6,18 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Checkbox, CircularProgress, FormControlLabel, FormLabel, Paper } from "@mui/material";
+import {
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  FormLabel,
+  Paper,
+} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const api = require("../../apiCalls");
 import useLocalStorage from "../../hooks/useLocalStorage";
+import Head from "next/head";
 
 type hfcType = {
   name: string;
@@ -145,10 +152,8 @@ const getStepContent = (
   }
 };
 
-
-
 export default function HorizontalNonLinearStepper() {
-  const [isLoading,setIsLoading]=React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{ [k: number]: boolean }>(
     {}
@@ -199,23 +204,19 @@ export default function HorizontalNonLinearStepper() {
     setCompleted(newCompleted);
     handleNext();
 
-  
-
     if (completedSteps() === totalSteps()) {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         const res = await api.sendHfcData(hfc);
-      console.log(res.id);
-      setHfcId(res.id);
+        console.log(res.id);
+        setHfcId(res.id);
+        setHfc({} as hfcType);
       } catch (error) {
-        console.log(error)
-        
-      }
-      finally{
-        setIsLoading(false)
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
       // Make the API call when the "Finish" button is clicked
-      
     }
   };
 
@@ -233,6 +234,9 @@ export default function HorizontalNonLinearStepper() {
         height: "100vh",
       }}
     >
+      <Head>
+        <title>HFC - Sofitel Sydney Wentworth</title>
+      </Head>
       <Typography variant={"h5"} textAlign={"center"} marginBottom={"2vh"}>
         Sofitel Sydney Wentworth - Concierge
       </Typography>
@@ -245,32 +249,46 @@ export default function HorizontalNonLinearStepper() {
           </Step>
         ))}
       </Stepper>
-      
+
       <div>
         {allStepsCompleted() ? (
           <>
-          {isLoading?<Box  display="flex"
-  justifyContent="center"
-  alignItems="center"
-  minHeight="100vh" ><CircularProgress/></Box>:<><Box
-              sx={{
-                flexGrow: 1,
-                overflow: "auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "3vh",
-              }}
-            >
-              <CheckCircleIcon fontSize="large" sx={{ color: "green" }} />
-            </Box>
-            <Typography sx={{ mt: 2, mb: 1 }} textAlign={"center"}>
-              Done. Please show the below code to the Concierge.
-            </Typography>
-            <Typography sx={{ mt: 2, mb: 1 }} variant="h2" textAlign={"center"}>
-              HFC#{hfcId}
-            </Typography></>}
-            
+            {isLoading ? (
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="100vh"
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    overflow: "auto",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "3vh",
+                  }}
+                >
+                  <CheckCircleIcon fontSize="large" sx={{ color: "green" }} />
+                </Box>
+                <Typography sx={{ mt: 2, mb: 1 }} textAlign={"center"}>
+                  Done. Please show the below code to the Concierge for
+                  <strong>verification</strong>.
+                </Typography>
+                <Typography
+                  sx={{ mt: 2, mb: 1 }}
+                  variant="h2"
+                  textAlign={"center"}
+                >
+                  HFC#{hfcId}
+                </Typography>
+              </>
+            )}
           </>
         ) : (
           <Box sx={{ flexGrow: 1, overflow: "auto", marginTop: "1vh" }}>
