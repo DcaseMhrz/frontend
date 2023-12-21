@@ -187,8 +187,9 @@ export const ComponentToPrint = React.forwardRef<
     </div>
   );
 });
+ComponentToPrint.displayName = "ComponentToPrint";
 
-const Admin = ({ data }: any) => {
+const Admin: React.FC<{ data: any }> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [selectedHFC, setselectedHFC] = useState({} as hfcType);
   const [hfcdata, setHfcdata] = useState([]);
@@ -468,7 +469,6 @@ const Admin = ({ data }: any) => {
       </Dashboard>
     );
 };
-
 export default Admin;
 
 export async function getServerSideProps(context: any) {
