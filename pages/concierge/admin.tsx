@@ -88,40 +88,51 @@ export const ComponentToPrint = React.forwardRef<
       ref={ref}
       style={{
         minHeight: "100vh", // Full page height
-        padding: "40px",
+        padding: "80px",
         fontFamily: "sans-serif",
       }}
     >
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
           alignItems: "center",
-          marginBottom: "20px",
+          marginBottom: "0px",
         }}
       >
         <h1 style={{ margin: 0 }}>Sofitel Sydney Wentworth</h1>
+        <p>
+          61-101 Phillip Street, Sydney, NSW, 2000 <br />
+          Phone: 02 9228 9182, 0493 442 438
+        </p>
       </div>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: "20px",
+          marginBottom: "10px",
         }}
       >
         <h2 style={{ margin: 0 }}>Hold for Collection</h2>
       </div>
 
-      <hr style={{ border: "1px solid #ddd", margin: "20px 0" }} />
+      {/* <hr style={{ border: "1px solid #ddd", margin: "10px 0" }} /> */}
 
       {/* Item Details section */}
-      <div style={{ justifyContent: "center", display: "flex" }}>
-        <h1 style={{ fontSize: "50px" }}>HFC # {hfcontent.id}</h1>
+      <div
+        style={{
+          justifyContent: "center",
+          display: "flex",
+          border: "10px solid black",
+        }}
+      >
+        <h1 style={{ fontSize: "60px" }}>HFC # {hfcontent.id}</h1>
       </div>
 
       <h2>Item Details</h2>
       <table
+        border={1}
         style={{
           width: "100%",
           borderCollapse: "collapse",
@@ -142,17 +153,17 @@ export const ComponentToPrint = React.forwardRef<
             <td>{hfcontent.verified_by}</td>
           </tr>
           <tr>
-            <th>Note:</th>
+            <th rowSpan={2}>Note:</th>
             <td>{hfcontent.note}</td>
           </tr>
         </tbody>
       </table>
 
-      <hr style={{ border: "1px solid #ddd", margin: "20px 0" }} />
+      {/* <hr style={{ border: "1px solid #ddd", margin: "10px 0" }} /> */}
 
       {/* Guest Details section */}
       <h2>Guest Information</h2>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <table border={1} style={{ width: "100%", borderCollapse: "collapse" }}>
         <tbody>
           <tr>
             <th>Full Name:</th>
@@ -169,11 +180,10 @@ export const ComponentToPrint = React.forwardRef<
         </tbody>
       </table>
 
-      <hr style={{ border: "1px solid #ddd", margin: "20px 0" }} />
-
       {/* Collector Details section */}
       <h2>Collector Information</h2>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      {/* <hr style={{ border: "1px solid #ddd", margin: "10px 0" }} /> */}
+      <table border={1} style={{ width: "100%", borderCollapse: "collapse" }}>
         <tbody>
           <tr>
             <th>Name:</th>
