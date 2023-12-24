@@ -62,20 +62,20 @@ const getStepContent = (
             onChange={handleChange("name")}
             value={hfc.name || ""} // added value prop here
           />
-          <InputLabel>Phone Number</InputLabel>
+          <InputLabel>Email </InputLabel>
+          <TextField
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            onChange={handleChange("email")}
+            value={hfc.email || ""} // added value prop here
+          />
+          <InputLabel>Phone Number (optional)</InputLabel>
           <TextField
             required
             fullWidth
             sx={{ mt: 2, mb: 2 }}
             onChange={handleChange("phone")}
             value={hfc.phone || ""} // added value prop here
-          />
-          <InputLabel>Email (Optional)</InputLabel>
-          <TextField
-            fullWidth
-            sx={{ mt: 2, mb: 2 }}
-            onChange={handleChange("email")}
-            value={hfc.email || ""} // added value prop here
           />
         </>
       );
@@ -278,7 +278,9 @@ export default function HorizontalNonLinearStepper() {
                 </Box>
                 <Typography sx={{ mt: 2, mb: 1 }} textAlign={"center"}>
                   Done. Please show the below code to the Concierge for
-                  <strong>verification</strong>.
+                  <strong> verification</strong>. Once the Concierge has
+                  verified the code, you will receive a confirmation email.
+                  Thank you!.{" "}
                 </Typography>
                 <Typography
                   sx={{ mt: 2, mb: 1 }}

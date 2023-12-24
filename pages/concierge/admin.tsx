@@ -10,14 +10,19 @@ import {
   Divider,
   FormControlLabel,
   Grid,
+  InputLabel,
   List,
+  MenuItem,
+  OutlinedInput,
+  Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import Dashboard from "../../components/Layout/Dashboard";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { CheckBox } from "@mui/icons-material";
+import { CheckBox, Label } from "@mui/icons-material";
 import PrintIcon from "@mui/icons-material/Print";
 import { useReactToPrint } from "react-to-print";
 const api = require("@/../../apiCalls");
@@ -189,6 +194,36 @@ export const ComponentToPrint = React.forwardRef<
 });
 ComponentToPrint.displayName = "ComponentToPrint";
 
+const namesList = [
+  "Ricardo Oliva Farrarons",
+  "Jimmy Pongkapan",
+  "James Thurman",
+  "Josh Aronov",
+  "Vasile Soaita",
+  "Charles Manglicmot",
+  "Dikesh Maharjan",
+  "Jackson Denneen",
+  "Kushal Rawat",
+  "Prabin Chaulegain",
+  "Ashanna Bomzan",
+  "Gabriel Rodriguez",
+  "Grégoire Loyer",
+  "KC",
+  "Nicholas Clough",
+  "Pranisha Karki",
+  "Ram Giri",
+  "Tej Kaway",
+  "Tyler Tolentino",
+  "Valentina Rodriguez",
+  "Romane Rosselin",
+  "Richard Coote",
+  "Simeon Osullivan",
+  "Ragen Maharjan",
+  "Kashif Aftab",
+  "Alexander Ossipov",
+  "Nikesh Maharjan",
+];
+
 const Admin: React.FC<{ data: any }> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [selectedHFC, setselectedHFC] = useState({} as hfcType);
@@ -196,13 +231,23 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
   const componentRef = useRef<HTMLDivElement | null>(null);
   const [error, setError] = useState("");
 
+  const formattedDate = new Date(selectedHFC.created_at).toLocaleString(
+    "en-AU",
+    {
+      timeZone: "Australia/Sydney",
+      dateStyle: "medium",
+      timeStyle: "short",
+    }
+  );
+
   const handleClose = () => {
+    setError("");
     setOpen(false);
   };
 
   const handleSave = async () => {
     if (selectedHFC.verified && !selectedHFC.verified_by) {
-      setError("Verified by is required");
+      setError("Accepted by is required");
       return;
     }
     if (selectedHFC.verified && !selectedHFC.location) {
@@ -308,13 +353,26 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
               }}
             />
           </div>
-          <React.Fragment>
-            <Dialog open={open} onClose={handleClose}>
+          <Box sx={{ width: "100vw" }}>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                sx: {
+                  width: "100%",
+                  maxWidth: "1320px!important",
+                  maxHeight: "85vh",
+                  height: "100%",
+                },
+              }}
+            >
               <DialogTitle>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
                   <Box>
-                    HFC <strong>{selectedHFC.id} </strong>
-                    Item for {selectedHFC.cname}
+                    <Typography variant="h6">
+                      HFC <strong>{selectedHFC.id} </strong>
+                      Item for {selectedHFC.cname}
+                    </Typography>
                   </Box>
                   <Box
                     sx={{
@@ -341,130 +399,301 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
               <DialogContent>
                 <DialogContentText sx={{ my: "1rem" }}>
                   Details of the HFC
-                  {error && <p style={{ color: "red" }}>{error}</p>}
+                  {error && (
+                    <p
+                      style={{
+                        color: "red",
+                        justifyContent: "center",
+                        display: "flex",
+                      }}
+                    >
+                      {error}
+                    </p>
+                  )}
                 </DialogContentText>
                 <form>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <TextField
-                        label="Name"
-                        value={selectedHFC.name}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "name")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Collector Person Phone"
-                        value={selectedHFC.cphone}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "cphone")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Phone"
-                        value={selectedHFC.phone}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "phone")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Collector's Person Name"
-                        value={selectedHFC.cname}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "cname")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Email"
-                        value={selectedHFC.email}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "email")}
-                      />
-                    </Grid>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Name"
+                            value={selectedHFC.name}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "name")}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Collector's Person Name"
+                            value={selectedHFC.cname}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "cname")}
+                          />
+                        </Grid>
 
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Collector's Person Email"
-                        value={selectedHFC.cemail}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "cemail")}
-                      />
-                    </Grid>
-                    <Grid item xs={8}>
-                      <TextField
-                        label="Item"
-                        value={selectedHFC.item}
-                        multiline
-                        rows={3}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "item")}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <TextField
-                        label="Location"
-                        value={selectedHFC.location}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "location")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        control={<Checkbox checked={selectedHFC.verified} />}
-                        label="Item Verified"
-                        onChange={(e) => handleChange(e, "verified")}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        disabled={!selectedHFC.verified}
-                        label="Verified By"
-                        value={selectedHFC.verified_by}
-                        required={selectedHFC.verified}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "verified_by")}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Notes"
-                        value={selectedHFC.note}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "note")}
-                      />
-                    </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Phone"
+                            value={selectedHFC.phone}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "phone")}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Collector Person Phone"
+                            value={selectedHFC.cphone}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "cphone")}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Email"
+                            value={selectedHFC.email}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "email")}
+                          />
+                        </Grid>
 
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        control={<Checkbox checked={selectedHFC.collected} />}
-                        label="Item Collected"
-                        onChange={(e) => handleChange(e, "collected")}
-                      />
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Collector's Person Email"
+                            value={selectedHFC.cemail}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "cemail")}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            label="Item"
+                            value={selectedHFC.item}
+                            multiline
+                            rows={3}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "item")}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Divider sx={{ my: 2 }} />
+                      <Grid item xs={12}>
+                        The item was left by {selectedHFC.name} on{" "}
+                        {formattedDate} for {selectedHFC.cname} to collect.{" "}
+                        {selectedHFC.verified &&
+                          `The item was Accepted by ${selectedHFC.verified_by}.`}{" "}
+                        {selectedHFC.verified &&
+                          selectedHFC.location &&
+                          `The item was placed in ${selectedHFC.location}.`}
+                        {selectedHFC.collected &&
+                          selectedHFC.verified &&
+                          `The item has been Collected and given by ${
+                            selectedHFC.given_by ?? ""
+                          }.`}
+                      </Grid>
                     </Grid>
-
                     <Grid item xs={6}>
-                      <TextField
-                        disabled={!selectedHFC.collected}
-                        label="Given By"
-                        required={selectedHFC.collected}
-                        value={selectedHFC.given_by}
-                        fullWidth
-                        onChange={(e) => handleChange(e, "given_by")}
-                      />
+                      <Grid container spacing={2}>
+                        <FormControlLabel
+                          control={<Checkbox checked={selectedHFC.verified} />}
+                          label="Item Verified"
+                          onChange={(e) => handleChange(e, "verified")}
+                          sx={{ display: "none" }}
+                        />
+                        <Grid item xs={12}>
+                          <Button
+                            sx={{
+                              p: 2,
+                              marginRight: 0,
+                              width: "100%",
+                              pointerEvents: selectedHFC.verified
+                                ? "none"
+                                : "auto",
+                            }}
+                            variant={
+                              selectedHFC.verified ? "contained" : "outlined"
+                            }
+                            color={selectedHFC.verified ? "success" : "error"}
+                            onClick={() => {
+                              setselectedHFC({
+                                ...selectedHFC,
+                                verified: !selectedHFC.verified,
+                              });
+                            }}
+                          >
+                            {selectedHFC.verified
+                              ? "Accepted and Verified"
+                              : "Mark as Accepted"}
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <InputLabel
+                            htmlFor="accepted-by-select"
+                            sx={{
+                              display: selectedHFC.verified ? "block" : "none",
+                              my: 1,
+                            }}
+                          >
+                            Accepted By
+                          </InputLabel>
+                          <Select
+                            disabled={!selectedHFC.verified}
+                            value={selectedHFC.verified_by}
+                            required={selectedHFC.verified}
+                            fullWidth
+                            sx={{
+                              display: selectedHFC.verified ? "block" : "none",
+                            }}
+                            onChange={(e) => handleChange(e, "verified_by")}
+                          >
+                            <MenuItem value="" disabled>
+                              Select Verified By
+                            </MenuItem>
+                            {namesList.map((name) => (
+                              <MenuItem key={name} value={name}>
+                                {name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <InputLabel
+                            htmlFor="location-select"
+                            sx={{
+                              display: selectedHFC.verified ? "block" : "none",
+                              my: 1,
+                            }}
+                          >
+                            Location
+                          </InputLabel>
+                          <Select
+                            disabled={!selectedHFC.verified}
+                            value={selectedHFC.location}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "location")}
+                            sx={{
+                              display: selectedHFC.verified ? "block" : "none",
+                            }}
+                          >
+                            <MenuItem value="" disabled>
+                              Select Location
+                            </MenuItem>
+                            <MenuItem value="Storage 1">Storage 1</MenuItem>
+                            <MenuItem value="Luggage RoomHanger">
+                              Luggage Room Hanger
+                            </MenuItem>
+                            <MenuItem value="Luggage Room Bay 0">
+                              Luggage Room Bay 0
+                            </MenuItem>
+                            <MenuItem value="Luggage Room Bay 1">
+                              Luggage Room Bay 1
+                            </MenuItem>
+                            <MenuItem value="DM Safe">DM safe</MenuItem>
+                            <MenuItem value="Key Bag">Key Bag</MenuItem>
+                          </Select>
+                        </Grid>
+                        <Grid item xs={11}>
+                          <TextField
+                            label="Enter notes if required (optional)"
+                            value={selectedHFC.note}
+                            fullWidth
+                            multiline
+                            rows={3}
+                            onChange={(e) => handleChange(e, "note")}
+                            sx={{
+                              display: selectedHFC.verified ? "block" : "none",
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: selectedHFC.verified ? "block" : "none",
+                          }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox checked={selectedHFC.collected} />
+                            }
+                            label="Item Collected"
+                            onChange={(e) => handleChange(e, "collected")}
+                            sx={{ display: "none" }}
+                          />
+                          <Button
+                            sx={{
+                              p: 2,
+                              marginRight: 0,
+                              width: "100%",
+                              pointerEvents: selectedHFC.collected
+                                ? "none"
+                                : "auto",
+                            }}
+                            variant={
+                              selectedHFC.collected ? "contained" : "outlined"
+                            }
+                            color={selectedHFC.collected ? "success" : "error"}
+                            onClick={() => {
+                              setselectedHFC({
+                                ...selectedHFC,
+                                collected: !selectedHFC.collected,
+                              });
+                            }}
+                          >
+                            {selectedHFC.collected
+                              ? "Collected"
+                              : "Mark as Collected"}
+                          </Button>
+                        </Grid>
+
+                        <Grid item xs={11}>
+                          <InputLabel
+                            htmlFor="given-by-select"
+                            sx={{
+                              display: selectedHFC.collected ? "block" : "none",
+                              my: 1,
+                            }}
+                          >
+                            Given By
+                          </InputLabel>
+                          <Select
+                            id="given-by-select"
+                            disabled={!selectedHFC.collected}
+                            value={selectedHFC.given_by}
+                            required={selectedHFC.collected}
+                            fullWidth
+                            onChange={(e) => handleChange(e, "given_by")}
+                            sx={{
+                              display:
+                                selectedHFC.verified && selectedHFC.collected
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <MenuItem value="" disabled>
+                              Select Given By
+                            </MenuItem>
+                            {namesList.map((name) => (
+                              <MenuItem key={name} value={name}>
+                                {name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </form>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSave}>Save</Button>
+                <Button onClick={handleSave} sx={{ px: 5 }} variant="contained">
+                  Save
+                </Button>
               </DialogActions>
             </Dialog>
-          </React.Fragment>
+          </Box>
         </Box>
       </Dashboard>
     );
