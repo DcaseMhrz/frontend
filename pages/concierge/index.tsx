@@ -93,19 +93,19 @@ const getStepContent = (
             onChange={handleChange("cname")}
             value={hfc.cname || ""} // added value prop here
           />
-          <InputLabel>Collector&apos;s Phone Number (Optional)</InputLabel>
-          <TextField
-            fullWidth
-            sx={{ mt: 2, mb: 2 }}
-            onChange={handleChange("cphone")}
-            value={hfc.cphone || ""} // added value prop here
-          />
           <InputLabel>Collector&apos;s Email (Optional)</InputLabel>
           <TextField
             fullWidth
             sx={{ mt: 2, mb: 2 }}
             onChange={handleChange("cemail")}
             value={hfc.cemail || ""} // added value prop here
+          />
+          <InputLabel>Collector&apos;s Phone Number (Optional)</InputLabel>
+          <TextField
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            onChange={handleChange("cphone")}
+            value={hfc.cphone || ""} // added value prop here
           />
         </>
       );
