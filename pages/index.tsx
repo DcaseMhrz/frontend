@@ -29,8 +29,8 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mdikesh.vercel.app">
-        Dcase Mhrz
+      <Link color="inherit" href="https://sswhfc.vercel.app">
+        HFC - SSW Concierge
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

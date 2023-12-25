@@ -307,7 +307,7 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
     getHFC();
   }, []);
 
-  if (data.errors) {
+  if (data.errors && typeof window !== "undefined") {
     Cookies.remove("token");
     window.location.href = "/";
   }
