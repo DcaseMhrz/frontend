@@ -275,7 +275,7 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
       setIsLoading(true);
       const res = await api.updateHfcData(selectedHFC);
 
-      getHFC();
+      handleSearch();
     } catch (error) {
       console.log(error);
     } finally {
@@ -307,10 +307,6 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
     const res = await api.searchHFCData(searchTerm);
     setHfcdata(res);
   };
-
-  useEffect(() => {
-    getHFC();
-  }, []);
 
   if (data.errors && typeof window !== "undefined") {
     Cookies.remove("token");
