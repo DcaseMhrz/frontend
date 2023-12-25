@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -255,6 +256,8 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
     setOpen(false);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSave = async () => {
     if (selectedHFC.verified && !selectedHFC.verified_by) {
       setError("Accepted by is required");
@@ -269,12 +272,14 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
       return;
     }
     try {
+      setIsLoading(true);
       const res = await api.updateHfcData(selectedHFC);
 
       getHFC();
     } catch (error) {
       console.log(error);
     } finally {
+      setIsLoading(false);
       setOpen(false);
       setError("");
     }
@@ -699,7 +704,20 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleSave} sx={{ px: 5 }} variant="contained">
-                  Save
+                  {isLoading ? (
+                    <>
+                      <CircularProgress
+                        sx={{
+                          color: "white",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>Save</>
+                  )}
                 </Button>
               </DialogActions>
             </Dialog>
