@@ -303,9 +303,18 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
   //searching function
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleSearch = async () => {
-    const res = await api.searchHFCData(searchTerm);
-    setHfcdata(res);
+    setLoading(true);
+    try {
+      const res = await api.searchHFCData(searchTerm);
+      setHfcdata(res);
+    } catch (error) {
+      console.error(error);
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   };
 
   if (data.errors && typeof window !== "undefined") {
@@ -349,20 +358,40 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
         </Box>
         <Box sx={{ mt: "1rem" }}>
           <div style={{ height: "60vh", width: "100%" }}>
-            <DataGrid
-              rows={hfcdata}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
-                },
-              }}
-              pageSizeOptions={[10, 50, 100]}
-              onRowDoubleClick={(row) => {
-                setOpen(true);
-                setselectedHFC(row.row);
-              }}
-            />
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: "100%",
+                }}
+              >
+                <CircularProgress
+                  sx={{
+                    color: "gray",
+                    display: "flex",
+                  }}
+                />
+              </Box>
+            ) : (
+              <>
+                <DataGrid
+                  rows={hfcdata}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  pageSizeOptions={[10, 50, 100]}
+                  onRowDoubleClick={(row) => {
+                    setOpen(true);
+                    setselectedHFC(row.row);
+                  }}
+                />
+              </>
+            )}
           </div>
           <Box sx={{ width: "100vw" }}>
             <Dialog
