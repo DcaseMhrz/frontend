@@ -10,7 +10,7 @@ const Callback = () => {
   const authenticate = async (token: string) => {
     // If the token is valid set the user and token in the local storage
     if (token) {
-      Cookies.set("token", token);
+      Cookies.set("token", token, { expires: 365 });
       router.push("/dashboard");
     } else {
       Cookies.set("token", "");
