@@ -48,16 +48,6 @@ function Copyright(props: any) {
 
 const itemLists = [
   {
-    name: "Dashboard",
-    link: "/dashboard",
-    icon: <HomeIcon sx={{ height: 40, width: 40 }} />,
-  },
-  {
-    name: "HFC Form",
-    link: "/concierge",
-    icon: <InsertDriveFileIcon sx={{ height: 40, width: 40 }} />,
-  },
-  {
     name: "Search HFC",
     link: "/concierge/admin",
     icon: <PlagiarismIcon sx={{ height: 40, width: 40 }} />,
@@ -122,7 +112,7 @@ interface DashboardProps {
   title: string;
 }
 export default function Dashboard(props: DashboardProps) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };

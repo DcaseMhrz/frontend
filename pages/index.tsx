@@ -67,7 +67,7 @@ export default function SignInSide() {
       } else {
         setError(false);
         Cookies.set("token", signin.data.token.token);
-        router.push("/dashboard");
+        router.push("//concierge/admin");
         setLoading(false);
       }
     } catch (error) {

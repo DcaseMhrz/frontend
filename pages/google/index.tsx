@@ -11,7 +11,7 @@ const Callback = () => {
     // If the token is valid set the user and token in the local storage
     if (token) {
       Cookies.set("token", token, { expires: 365 });
-      router.push("/dashboard");
+      router.push("/concierge/admin");
     } else {
       Cookies.set("token", "");
       router.push("/");

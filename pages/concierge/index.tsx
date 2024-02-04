@@ -296,12 +296,15 @@ export default function HorizontalNonLinearStepper() {
           <Box sx={{ flexGrow: 1, overflow: "auto", marginTop: "1vh" }}>
             <Box
               sx={{
-                flexGrow: 1,
-                overflow: "auto",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
               }}
             >
               <Paper
                 sx={{
+                  width: { xs: "100%", md: "40%" }, // Limit width to 33% on desktop
                   padding: "1rem",
                   boxShadow: "1rem",
                   marginY: "2rem",

@@ -9,6 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  Fab,
   FormControlLabel,
   Grid,
   InputLabel,
@@ -23,9 +24,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import Dashboard from "../../components/Layout/Dashboard";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { CheckBox, Label } from "@mui/icons-material";
+import { Add, CheckBox, Label } from "@mui/icons-material";
 import PrintIcon from "@mui/icons-material/Print";
 import { useReactToPrint } from "react-to-print";
+import Link from "next/link";
 const api = require("@/../../apiCalls");
 
 const columns: GridColDef[] = [
@@ -747,6 +749,18 @@ const Admin: React.FC<{ data: any }> = ({ data }) => {
               </DialogActions>
             </Dialog>
           </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "end", marginTop: "1rem" }}>
+          <Link href="/concierge" target="_blank">
+            <Fab
+              variant="extended"
+              color="primary"
+              sx={{ alignSelf: "flex-end" }}
+            >
+              <Add sx={{ mr: 1 }} />
+              Add New
+            </Fab>
+          </Link>
         </Box>
       </Dashboard>
     );
